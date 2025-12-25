@@ -25,14 +25,14 @@ zip = curry binary do ->
         yield [ a.value, b.value ]
         
     .define [ isIterable, isIterable ], ( i, j ) ->
-      Iterator
-        .from i
-        .zip j
-        
-    .define [ Array, Array ], ( ax, bx ) ->
-      Iterator
-        .from ax
-        .zip bx
-  
+      i = Iterator.from i
+      j = Iterator.from j
+      
+      loop
+        a = i.next()
+        b = j.next()
+        break if a.done || b.done
+        yield [ a.value, b.value ]
+          
 export { zip }
 export default zip

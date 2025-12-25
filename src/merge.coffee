@@ -11,18 +11,18 @@ merge = curry binary do ->
   
   ( Generic.make "merge" )
   
-    .define [ isReactive, isReactive ], ( ri, rj ) ->
+    .define [ isReactive, isReactive ], ( i, j ) ->
 
       # TODO use await using when available
 
-      i = ri[ Symbol.asyncIterator ]()
-      j = rj[ Symbol.asyncIterator ]()
+      i = i[ Symbol.asyncIterator ]()
+      j = j[ Symbol.asyncIterator ]()
 
       while !(( done p ) && ( done q ))
-        if done p
+        if ! done p
           p = await i.next()
           yield p.value unless done p
-        if done q
+        if ! done q
           q = await j.next()
           yield q.value unless done q
         
@@ -33,10 +33,10 @@ merge = curry binary do ->
       j = Iterator.from j
 
       while !(( done p ) && ( done q ))
-        if done p
+        if ! done p
           p = i.next()
           yield p.value unless done p
-        if done q
+        if ! done q
           q = j.next()
           yield q.value unless done q
 

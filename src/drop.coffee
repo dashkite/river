@@ -38,7 +38,7 @@ drop = curry binary do ->
         .drop n
       
     .define [ Number, Array ], ( n, ax ) ->
-      array
+      ax
         .values()
         .drop n
 

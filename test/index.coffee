@@ -3,24 +3,51 @@ import {test, success} from "@dashkite/amen"
 import print from "@dashkite/amen-console"
 
 import { 
-  map 
-  reduce
-  select
-  reject
-  find
-  any
   all
+  any
   collect
+  drop
+  each
+  find
+  group
+  map 
+  merge
+  reduce
+  reject
+  resolve
+  select
+  spread
+  start
+  take
+  tap
+  unique
+  uniquely
+  zip
 } from "../src"
 
 import { pipe } from "@dashkite/joy/function"
 import { negate } from "@dashkite/joy/predicate"
+
+call = ( args..., f ) -> f.call null, args...
 
 double = ( x ) -> x * 2
 sum = ( a, b ) -> a + b
 even = ( x ) -> ( x % 2 ) == 0
 odd = negate even
 
+resolving = ( i ) ->
+  for x from i
+    yield await Promise.resolve x
+
+rejecting = ->
+  yield await Promise.reject new Error "Reactor Failure"
+
+promised = ( i ) -> i.map ( x ) -> Promise.resolve x
+
+cycle = ( i ) ->
+  loop yield x for x from i
+
+# --- Test Suite ---
 do ->
 
   print await test "DashKite River", [
@@ -36,29 +63,61 @@ do ->
     ]
 
     test "collect", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        assert.deepEqual [ 1, 2 ], 
+          collect [ 1, 2 ].values()
+
+      test "reactor", ->
+        assert.deepEqual [ 1, 2 ], 
+          await collect resolving [ 1, 2 ]
     ]
 
     test "drop", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        assert.deepEqual [ 3, 4 ], collect drop 2, [ 1..4 ]
+
+      test "reactor", ->
+        assert.deepEqual [ 3, 4 ], 
+          await collect drop 2, resolving [ 1..4 ]
     ]
 
     test "each", [
-      test "iterator"
-      test "reactor"
-    ]
-
-    test "find", [
 
       test "iterator", ->
-        assert.deepEqual 2,
-          find even, [ 1..5 ]
+        x = 0
+        add = ( y ) -> x += y
+        each add, [ 1..3 ]
+        assert.equal 6, x
 
-      test "reactor"
-
+      test "reactor", ->
+        x = 0
+        add = ( y ) -> x += y
+        await each add, resolving [ 1..3 ]
+        assert.equal 6, x
     ]
+
+    test "find", do -> 
+
+      # for testing short-circuit
+      x = undefined
+      integers = -> yield x++ while x < 100
+
+      [
+
+        test "iterator", ->
+          x = 1
+          assert.equal 2, find even, integers()
+          assert.equal 3, x
+
+        test "reactor", ->
+          x = 1
+          assert.equal 2, 
+            await find even, resolving integers()
+          assert.equal 3, x
+
+      ]
 
     test "group", [
       test "iterator"
@@ -69,15 +128,24 @@ do ->
 
       test "iterator", ->
         assert.deepEqual [ 2, 4, 6 ], 
-          Array.from map double, [ 1..3 ]
+          collect map double, [ 1..3 ]
 
-      test "reactor"
+      test "reactor", ->
+        assert.deepEqual [ 2, 4, 6 ], 
+          await collect map double, resolving [ 1..3 ]
 
     ]
 
     test "merge", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        assert.deepEqual [ 1, 3, 2, 4 ],
+          collect merge [ 1, 2 ], [ 3, 4 ]
+
+      test "reactor", ->
+        assert.deepEqual [ 1, 3, 2, 4 ],
+          await collect merge ( resolving [ 1, 2 ]), ( resolving [ 3, 4 ])
+
     ]
 
     test "reduce", [
@@ -91,35 +159,46 @@ do ->
     ]
 
     test "reject", [
-
       test "iterator", ->
-        odd = ( x ) -> ( x % 2 ) != 0
-        assert.deepEqual [ 2, 4 ],
-          Array.from reject odd, [ 1..5 ]
-
-      test "reactor"
-
+        assert.deepEqual [ 1, 3, 5 ],
+          collect reject even, [ 1..5 ]
     ]
 
     test "resolve", [
-      test "iterator"
-      test "reactor"
+
+      test "iterable", ->
+        assert.deepEqual [ 1..5 ], 
+          await collect resolve promised [ 1..5 ]
+
+      test "reactive"
+
     ]
 
     test "select", [
 
       test "iterator", ->
         assert.deepEqual [ 1, 3, 5 ],
-          Array.from select odd, [ 1..5 ]
+          collect select odd, [ 1..5 ]
 
       test "reactor"
 
     ]
 
-    test "spread", [
-      test "iterator"
-      test "reactor"
-    ]
+    test "spread", do ->
+
+      clone = ( x ) -> [ x, x ]
+
+      [
+
+        test "iterator", ->
+          assert.deepEqual [ 1, 1, 2, 2 ], 
+            collect spread clone, [ 1, 2 ]
+
+        test "reactor", ->
+          assert.deepEqual [ 1, 1, 2, 2 ], 
+            await collect spread clone, resolving [ 1, 2 ]
+
+      ]
 
     test "start", [
       test "iterator"
@@ -127,17 +206,37 @@ do ->
     ]
 
     test "take", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        assert.deepEqual [ 1, 2, 1, 2 ], 
+          collect take 4, cycle [ 1, 2 ]
+
+      test "reactor", ->
+        assert.deepEqual [ 1, 2, 1, 2 ], 
+          await collect take 4, resolving cycle [ 1, 2 ]
+
     ]
 
     test "tap", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        x = 0
+        f = -> x++
+        collect tap f, [ 1..5 ]
+        assert.equal 5, x
+
+      test "reactor", ->
+        x = 0
+        f = -> x++
+        await collect tap f, resolving [ 1..5 ]
+        assert.equal 5, x
+
     ]
 
     test "unique", [
-      test "iterator"
+      test "iterator", ->
+        assert.deepEqual [ 1, 2 ], 
+          collect unique [ 1, 1, 2, 2 ]        
       test "reactor"
     ]
 
@@ -147,11 +246,16 @@ do ->
     ]
 
     test "zip", [
-      test "iterator"
-      test "reactor"
+
+      test "iterator", ->
+        assert.deepEqual [[ 1, 3 ], [ 2, 4 ]],
+          collect zip [ 1, 2 ], [ 3, 4 ]
+
+      test "reactor", ->
+        assert.deepEqual [[ 1, 3 ], [ 2, 4 ]],
+          await collect zip ( resolving [ 1, 2 ]), ( resolving [ 3, 4 ])
+
     ]
 
 
   ]
-
-  process.exit if success then 0 else 1
