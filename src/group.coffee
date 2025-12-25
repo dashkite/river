@@ -12,7 +12,7 @@ group = curry binary do ->
     .define [ Function, isReactive ], ( getter, i ) ->
       groups = new Map()
       for await x from i
-        key = getter x
+        key = getter.call @, x
         unless groups.has key
           groups.set key, []
         groups
@@ -21,7 +21,7 @@ group = curry binary do ->
       groups
         
     .define [ Function, isIterable ], ( getter, i ) ->
-      Map.groupBy i, keySelector
+      Map.groupBy i, getter.bind @
 
 export { group }
 export default group

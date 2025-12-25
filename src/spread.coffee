@@ -9,21 +9,21 @@ spread = curry binary do ->
   
   ( Generic.make "spread" )
   
-    .define [ Function, isReactive], ( mapper, i ) ->
+    .define [ Function, isReactive], ( transform, i ) ->
       for await x from i
-        for await nested from mapper x
+        for await nested from transform.call @, x
           yield nested
         
-    .define [ Function, isIterable ], ( mapper, i ) ->
+    .define [ Function, isIterable ], ( transform, i ) ->
       Iterator
         .from i
-        .flatMap mapper
+        .flatMap transform.bind @
         
-    .define [ Function, Iterator ], ( mapper, i ) ->
-      i.flatMap mapper
+    .define [ Function, Iterator ], ( transform, i ) ->
+      i.flatMap transform.bind @
       
-    .define [ Function, Array ], ( mapper, ax ) ->
-      ax.values().flatMap mapper
+    .define [ Function, Array ], ( transform, ax ) ->
+      ax.values().flatMap transform.bind @
 
 export { spread }
 export default spread

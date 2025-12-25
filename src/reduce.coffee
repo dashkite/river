@@ -13,19 +13,20 @@ reduce = curry ternary do ->
 
     .define [ isAny, Function, isReactive ], ( seed, reducer, i ) ->
       result = seed
-      result = reducer acc, x for await x from i
+      for await x from i
+        result = reducer.call @, result, x 
       result
 
     .define [ isAny, Function, isIterable ], ( seed, reducer, i ) ->
       Iterator
         .from i
-        .reduce reducer, seed
+        .reduce ( reducer.bind @ ), seed
 
     .define [ isAny, Function, Iterator ], ( seed, reducer, i ) ->
-      i.reduce reducer, seed
+      i.reduce ( reducer.bind @ ), seed
 
     .define [ isAny, Function, Array ], ( seed, reducer, ax ) ->
-      ax.reduce reducer, seed
+      ax.reduce ( reducer.bind @ ), seed
 
 export { reduce }
 export default reduce

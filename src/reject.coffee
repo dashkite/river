@@ -4,7 +4,7 @@ import select from "./select"
 
 
 reject = ( predicate, i ) ->
-  select ( negate predicate ), i
+  select.call @, ( negate predicate ), i
 
 export { reject }
 export default reject

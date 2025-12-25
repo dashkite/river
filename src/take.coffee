@@ -11,11 +11,13 @@ take = curry binary do ->
   
     .define [ Function, isReactive ], ( predicate, i ) ->
       for await x from i
-        break if ! predicate x
+        break if ! predicate.call @, x
         yield x
         
     .define [ Function, isIterable ], ( predicate, i ) ->
-      Iterator.from(i).takeWhile predicate
+      Iterator
+        .from i
+        .takeWhile predicate.bind @
       
     .define [ Function, Array ], ( predicate, ax ) ->
       ax.values().takeWhile predicate

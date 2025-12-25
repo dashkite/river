@@ -9,12 +9,12 @@ zip = curry binary do ->
   
   ( Generic.make "zip" )
   
-    .define [ isReactive, isReactive ], ( ri, rj ) ->
+    .define [ isReactive, isReactive ], ( i, j ) ->
 
       # TODO use await using when available
 
-      i = ri[ Symbol.asyncIterator ]()
-      j = rj[ Symbol.asyncIterator ]()
+      i = i[ Symbol.asyncIterator ]()
+      j = j[ Symbol.asyncIterator ]()
       
       loop
         [ a, b ] = await Promise.all [ 

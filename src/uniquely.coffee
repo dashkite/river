@@ -12,7 +12,7 @@ uniquely = curry binary do ->
     .define [ Function, isReactive ], ( getter, i ) ->
       seen = new Set()
       for await x from i
-        key = getter x
+        key = getter.call @, x
         unless seen.has key
           seen.add key
           yield x
@@ -21,7 +21,7 @@ uniquely = curry binary do ->
     .define [ Function, isIterable ], ( getter, i ) ->
       seen = new Set()
       for x from i
-        key = getter x
+        key = getter.call @, x
         unless seen.has key
           seen.add key
           yield x

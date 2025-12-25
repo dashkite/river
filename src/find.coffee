@@ -10,19 +10,19 @@ find = curry binary do ->
   ( Generic.make "find" )
   
     .define [ Function, isReactive ], ( predicate, i ) ->
-      return x for await x from i when predicate x
+      return x for await x from i when predicate.call @, x
       undefined
         
     .define [ Function, isIterable ], ( predicate, i ) ->
       Iterator
         .from i
-        .find predicate
+        .find predicate.bind @
         
     .define [ Function, Iterator ], ( predicate, i ) ->
-      i.find predicate
+      i.find predicate.bind @
       
     .define [ Function, Array ], ( predicate, ax ) ->
-      ax.find predicate
+      ax.find predicate.bind @
 
 export { find }
 export default find

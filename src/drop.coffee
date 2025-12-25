@@ -12,7 +12,7 @@ drop = curry binary do ->
     .define [ Function, isReactive ], ( predicate, i ) ->
       skipping = true
       for await x from i
-        if skipping && predicate x then continue
+        if skipping && predicate.call @, x then continue
         skipping = false
         yield x
       return
@@ -20,12 +20,12 @@ drop = curry binary do ->
     .define [ Function, isIterable ], ( predicate, i ) ->
       Iterator
         .from i
-        .dropWhile predicate
+        .dropWhile predicate.bind @
       
     .define [ Function, Array ], ( predicate, ax ) ->
       array
         .values()
-        .dropWhile predicate
+        .dropWhile predicate.bind @
 
     .define [ Number, isReactive ], ( n, i ) ->
       count = 0

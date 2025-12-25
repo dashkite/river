@@ -10,18 +10,18 @@ select = curry binary do ->
   ( Generic.make "select" )
   
     .define [ Function, isReactive ], ( predicate, i ) ->
-      yield x for await x from i when predicate x
+      yield x for await x from i when predicate.call @, x
         
     .define [ Function, isIterable ], ( predicate, i ) ->
       Iterator
         .from i
-        .filter predicate
+        .filter predicate.bind @
         
     .define [ Function, Iterator ], ( predicate, i ) ->
-      i.filter predicate
+      i.filter predicate.bind @
       
     .define [ Function, Array ], ( predicate, ax ) ->
-      ax.values().filter predicate
+      ax.values().filter predicate.bind @
 
 export { select }
 export default select

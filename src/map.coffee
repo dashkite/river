@@ -9,19 +9,19 @@ map = curry binary do ->
   
   ( Generic.make "map" )
   
-    .define [ Function, isReactive ], ( mapper, i ) ->
-      yield mapper x for await x from i
+    .define [ Function, isReactive ], ( transform, i ) ->
+      yield transform.call @, x for await x from i
         
-    .define [ Function, isIterable ], ( mapper, i ) ->
+    .define [ Function, isIterable ], ( transform, i ) ->
       Iterator
         .from i
-        .map mapper
+        .map transform.bind @
         
-    .define [ Function, Iterator ], ( mapper, i ) ->
-      i.map mapper
+    .define [ Function, Iterator ], ( transform, i ) ->
+      i.map transform.bind @
       
-    .define [ Function, Array ], ( mapper, ax ) ->
-      ax.values().map mapper
+    .define [ Function, Array ], ( transform, ax ) ->
+      ax.values().map transform.bind @
 
 export { map }
 export default map
