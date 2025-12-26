@@ -3,7 +3,7 @@ import Generic from "@dashkite/generic"
 import {
   isIterable
   isReactive
-} from "./helpers"
+} from "@dashkite/joy/type"
 
 isAny = -> true
 

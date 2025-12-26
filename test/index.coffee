@@ -126,9 +126,26 @@ do ->
 
     test "map", [
 
-      test "iterator", ->
-        assert.deepEqual [ 2, 4, 6 ], 
-          collect map double, [ 1..3 ]
+      test "iterator", [
+
+        test "function", ->
+          assert.deepEqual [ 2, 4, 6 ], 
+            collect map double, [ 1..3 ]
+
+        test "method", ->
+          class Name
+            constructor: ( @value ) ->
+            append: ( x ) -> "#{ x }-#{ @value }"
+            appendAll: pipe [
+              map Name::append
+              collect
+            ]
+          
+          foo = new Name "foo"
+          assert.deepEqual [ "1-foo", "2-foo", "3-foo" ],
+            foo.appendAll [ 1..3 ]
+
+      ]
 
       test "reactor", ->
         assert.deepEqual [ 2, 4, 6 ], 

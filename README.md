@@ -34,6 +34,7 @@ values = await get [ "https://httpbin.org/json" ]
 - Uses lazy evaluation whenever possible
 - Dispatches to the optimized implementation based on the arguments
 - Provides a functional interface for a superset of the JavaScript iterator helpers
+- Preserves _this_ binding within combinators allowing use within methods
 
 ## API Reference
 
@@ -55,6 +56,7 @@ values = await get [ "https://httpbin.org/json" ]
 |                | `any`        | Returns true if any item satisfies a predicate, false otherwise |
 |                | `collect`    | Collect the items of a stream into an array                  |
 |                | `each`       | Exhaust a stream by calling a function on each item          |
+|                | `find`       | Returns the first item matching a predicate, `undefined` otherwise |
 |                | `group`      | Groups items into a Map by key                               |
 |                | `reduce`     | Accumulates the items into a single value                    |
 |                | `start`      | Exhaust a stream without doing anything with the products    |
