@@ -1,76 +1,148 @@
-# DashKite River API Reference
+# API Reference
 
-## Transformation
+[DashKite River](https://github.com/dashkite/river) provides a unified functional interface for iterators and reactors (asynchronous iterators). Every function is curried and automatically dispatches to the most efficient implementation.
 
-### map
+## Table of Contents
+
+- **[Classes](https://www.google.com/search?q=%23classes)**
+  - [IteratorQueue](https://www.google.com/search?q=%23iteratorqueue)
+  - [ReactorQueue](https://www.google.com/search?q=%23reactorqueue)
+  - [BufferedIterator](https://www.google.com/search?q=%23bufferediterator)
+  - [BufferedReactor](https://www.google.com/search?q=%23bufferedreactor)
+- **[Functions](https://www.google.com/search?q=%23functions)**
+  - **[Transformation](https://www.google.com/search?q=%23transformation)**
+    - [map](https://www.google.com/search?q=%23map)
+    - [resolve](https://www.google.com/search?q=%23resolve)
+    - [spread](https://www.google.com/search?q=%23spread)
+    - [tap](https://www.google.com/search?q=%23tap)
+    - [tee](https://www.google.com/search?q=%23tee)
+  - **[Filtering](https://www.google.com/search?q=%23filtering)**
+    - [partition](https://www.google.com/search?q=%23partition)
+    - [reject](https://www.google.com/search?q=%23reject)
+    - [select](https://www.google.com/search?q=%23select)
+    - [unique](https://www.google.com/search?q=%23unique)
+    - [uniquely](https://www.google.com/search?q=%23uniquely)
+  - **[Truncating](https://www.google.com/search?q=%23truncating)**
+    - [drop](https://www.google.com/search?q=%23drop)
+    - [take](https://www.google.com/search?q=%23take)
+  - **[Combining](https://www.google.com/search?q=%23combining)**
+    - [merge](https://www.google.com/search?q=%23merge)
+    - [zip](https://www.google.com/search?q=%23zip)
+  - **[Reducing](https://www.google.com/search?q=%23reducing)**
+    - [all](https://www.google.com/search?q=%23all)
+    - [any](https://www.google.com/search?q=%23any)
+    - [collect](https://www.google.com/search?q=%23collect)
+    - [each](https://www.google.com/search?q=%23each)
+    - [find](https://www.google.com/search?q=%23find)
+    - [group](https://www.google.com/search?q=%23group)
+    - [reduce](https://www.google.com/search?q=%23reduce)
+    - [start](https://www.google.com/search?q=%23start)
+
+## Classes
+
+These internal classes handle the buffering and coordination required for multi-consumer operations like `tee` and `partition`.
+
+### IteratorQueue
+
+A synchronous FIFO queue that can be consumed as an iterator.
+
+### ReactorQueue
+
+An asynchronous FIFO queue that can be consumed as a reactor.
+
+### BufferedIterator
+
+Composes a buffer and an iterator, allowing for shared iterators that push values into a buffer until they’re ready to be consumed.
+
+### BufferedReactor
+
+Composes a buffer and a reactor, allowing for shared reactors that push values into a buffer until they’re ready to be consumed.
+
+## Functions
+
+### Transformation
+
+#### map
 
 *map function, iterator → iterator*
 
 *map function, reactor ⇢ reactor*
 
-Produces a new stream where each item is the result of applying the mapping function to the original items.
+Given a mapping function and a stream, returns a new stream of the same type where each item has been transformed by the function.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 2, 4, 6 ], collect map double, [ 1..3 ]
 ```
 
-### resolve
+#### resolve
 
 *resolve iterator → reactor*
 
-Converts an iterator that produces Promises into a reactor that produces the resolved values of those Promises.
+Converts an iterator of Promises into a reactor that yields the resolved values.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1..5 ], await collect resolve promised [ 1..5 ]
 ```
 
-### spread
+#### spread
 
 *spread function, iterator → iterator*
 
 *spread function, reactor ⇢ reactor*
 
-Applies a function to each item that returns an iterable, then flattens the results into a single stream.
+Maps a function over a stream where the function returns an iterable, then flattens the result.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 clone = ( x ) -> [ x, x ]
 assert.deepEqual [ 1, 1, 2, 2 ], collect spread clone, [ 1, 2 ]
 ```
 
-### tap
+#### tap
 
 *tap function, iterator → iterator*
 
 *tap function, reactor ⇢ reactor*
 
-Applies a side-effect function to each item but passes the original item through unchanged.
+Executes a side-effect for each item in the stream, but returns a stream of the original items.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 x = 0
 f = -> x++
 collect tap f, [ 1..5 ]
 assert.equal 5, x
 ```
 
-## Filtering
+#### tee
 
-### reject
+*tee iterator → [ iterator, iterator ]*
+
+*tee reactor ⇢ [ reactor, reactor ]*
+
+Splits a single source into two identical streams. Uses internal buffering to ensure both consumers see all items.
+
+```coffeescript
+[ a, b ] = tee [ 1..3 ]
+assert.deepEqual [ 1..3 ], collect a
+assert.deepEqual [ 1..3 ], collect b
+```
+
+### Filtering
+
+#### partition
+
+*partition predicate, iterator → [ iterator, iterator ]*
+
+*partition predicate, reactor ⇢ [ reactor, reactor ]*
+
+Splits a stream into two: the first yielding items that pass the predicate, and the second yielding those that do not.
+
+```coffeescript
+[ odds, evens ] = partition odd, [ 1..4 ]
+assert.deepEqual [ 1, 3 ], collect odds
+assert.deepEqual [ 2, 4 ], collect evens
+```
+
+#### reject
 
 *reject predicate, iterator → iterator*
 
@@ -78,15 +150,11 @@ assert.equal 5, x
 
 Produces a stream containing only the items that **do not** satisfy the predicate.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1, 3, 5 ], collect reject even, [ 1..5 ]
 ```
 
-### select
+#### select
 
 *select predicate, iterator → iterator*
 
@@ -94,247 +162,188 @@ assert.deepEqual [ 1, 3, 5 ], collect reject even, [ 1..5 ]
 
 Produces a stream containing only the items that satisfy the predicate.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1, 3, 5 ], collect select odd, [ 1..5 ]
 ```
 
-### unique
+#### unique
 
 *unique iterator → iterator*
 
 *unique reactor ⇢ reactor*
 
-Produces a stream containing only unique items, filtering out duplicates.
+Filters out duplicate items from the stream.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1, 2 ], collect unique [ 1, 1, 2, 2 ]
 ```
 
-### uniquely
+#### uniquely
 
 *uniquely selector, iterator → iterator*
 
 *uniquely selector, reactor ⇢ reactor*
 
-Produces a stream where items are unique based on the value returned by the provided selector function.
+Filters items based on a uniqueness key produced by the selector function.
 
-#### Example
-
-CoffeeScript
-
-```
-list = [ {id: 1, name: 'a'}, {id: 1, name: 'b'}, {id: 2, name: 'c'} ]
+```coffeescript
+list = [ {id: 1, name: 'a'}, {id: 1, name: 'b'} ]
 getId = (obj) -> obj.id
-assert.deepEqual [ list[0], list[2] ], collect uniquely getId, list
+assert.deepEqual [ list[0] ], collect uniquely getId, list
 ```
 
-## Truncating
+### Truncating
 
-### drop
+#### drop
 
 *drop n, iterator → iterator*
+*drop predicate, iterator → iterator*
 
 *drop n, reactor ⇢ reactor*
+*drop predicate, reactor ⇢ reactor*
 
-Skips the first *n* items of the stream and produces the remaining items.
+Discards the first *n* items or the first items that satisfy the predicate, and returns a stream of the remainder.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 3, 4 ], collect drop 2, [ 1..4 ]
 ```
 
-### take
+#### take
 
 *take n, iterator → iterator*
+*take predicate, iterator → iterator*
 
 *take n, reactor ⇢ reactor*
+*drop predicate, reactor ⇢ reactor*
 
-Produces only the first *n* items from the stream.
+Returns a stream consisting of only the first *n* items or the first items that satisfy the predicate.
 
-#### Example
-
-CoffeeScript
-
-```
-assert.deepEqual [ 1, 2, 1, 2 ], collect take 4, cycle [ 1, 2 ]
+```coffeescript
+assert.deepEqual [ 1, 2 ], collect take 2, [ 1..5 ]
 ```
 
-## Combining
+### Combining
 
-### merge
+#### merge
 
 *merge iterator, iterator → iterator*
 
 *merge reactor, reactor ⇢ reactor*
 
-Combines two streams by alternating between their items.
+Interleaves items from two streams into a single stream.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1, 3, 2, 4 ], collect merge [ 1, 2 ], [ 3, 4 ]
 ```
 
-### zip
+#### zip
 
 *zip iterator, iterator → iterator*
 
 *zip reactor, reactor ⇢ reactor*
 
-Produces a stream of pairs (arrays of two items) created from the corresponding items of the two input streams.
+Combines two streams into a stream of pairs (2-element arrays).
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [[ 1, 3 ], [ 2, 4 ]], collect zip [ 1, 2 ], [ 3, 4 ]
 ```
 
-## Reducing
+### Reducing
 
-### all
+#### all
 
 *all predicate, iterator → boolean*
 
 *all predicate, reactor ⇢ boolean*
 
-Returns true if all items satisfy the predicate. It short-circuits as soon as an item fails.
+Returns true if every item passes the predicate. Short-circuits on first failure.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.equal false, all odd, [ 1..5 ]
 ```
 
-### any
+#### any
 
 *any predicate, iterator → boolean*
 
 *any predicate, reactor ⇢ boolean*
 
-Returns true if at least one item in the stream satisfies the predicate.
+Returns true if at least one item passes the predicate. Short-circuits on first success.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.equal true, any even, [ 1..3 ]
 ```
 
-### collect
+#### collect
 
 *collect iterator → array*
 
 *collect reactor ⇢ array*
 
-Exhausts the stream and gathers all produced items into a single array.
+Exhausts the stream and returns all items in an array.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.deepEqual [ 1, 2 ], collect [ 1, 2 ].values()
 ```
 
-### each
+#### each
 
 *each function, iterator → undefined*
 
 *each function, reactor ⇢ undefined*
 
-Exhausts the stream by applying the provided function to every item.
+Iterates over the stream and applies the function to each item for side effects.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 x = 0
-add = ( y ) -> x += y
-each add, [ 1..3 ]
+each ((y) -> x += y), [ 1..3 ]
 assert.equal 6, x
 ```
 
-### find
+#### find
 
 *find predicate, iterator → value | undefined*
 
 *find predicate, reactor ⇢ value | undefined*
 
-Returns the first item that satisfies the predicate, or undefined if no such item exists.
+Returns the first item that satisfies the predicate.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.equal 2, find even, [ 1..3 ]
 ```
 
-### group
+#### group
 
 *group selector, iterator → Map*
 
 *group selector, reactor ⇢ Map*
 
-Groups items from the stream into a `Map` where keys are produced by the selector.
+Categorizes items into a Map where keys are generated by the selector.
 
-#### Example
-
-CoffeeScript
-
-```
-parity = (x) -> if x % 2 == 0 then 'even' else 'odd'
+```coffeescript
 result = group parity, [ 1..4 ]
 ```
 
-### reduce
+#### reduce
 
 *reduce initial, accumulator, iterator → value*
 
 *reduce initial, accumulator, reactor ⇢ value*
 
-Reduces the stream to a single value using an accumulator and an initial seed.
+Standard reduction of a stream to a single value.
 
-#### Example
-
-CoffeeScript
-
-```
+```coffeescript
 assert.equal 6, reduce 0, sum, [ 1..3 ]
 ```
 
-### start
+#### start
 
 *start iterator → undefined*
 
 *start reactor ⇢ undefined*
 
-Exhausts the stream without performing any action on the products, typically to trigger side effects.
+Drives a stream to completion without yielding products. Useful for lazy streams with side effects.
 
-#### Example
-
-CoffeeScript
-
+```coffeescript
+start logger
 ```
-start someLazyStream
-```
-
