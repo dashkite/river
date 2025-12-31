@@ -36,7 +36,9 @@ values = await get [ "https://httpbin.org/json" ]
 - Provides a functional interface for a superset of the JavaScript iterator helpers
 - Preserves _this_ binding within combinators allowing use within methods
 
-## API Reference
+## High-Level API
+
+### Functions
 
 | **Category**   | **Function** | **Description**                                              |
 | -------------- | ------------ | ------------------------------------------------------------ |
@@ -44,8 +46,10 @@ values = await get [ "https://httpbin.org/json" ]
 |                | `resolve`    | Converts an iterator producing promises into a reactor producing the promised values |
 |                | `spread`     | Flattens results after apply a function to each item (analogous to `flatMap` in the JavaScript API) |
 |                | `tap`        | Applies a function to each item, but produces the original value |
-| Filtering      | `reject`     | Produces items where a predicate is true                     |
+| Filtering      | `partition`  | Returns two iterators or reactors from a source based on a predicate |
+|                | `reject`     | Produces items where a predicate is true                     |
 |                | `select`     | Produces items where a predicate is true                     |
+|                | `tee`        | Creates two new iterators or reactors from a source          |
 |                | `unique`     | Produces unique items                                        |
 |                | `uniquely`   | Produces items with unique values based on a getter          |
 | Truncating     | `drop`       | Skips the first _n_ items based on an index or predicate     |
@@ -60,4 +64,10 @@ values = await get [ "https://httpbin.org/json" ]
 |                | `group`      | Groups items into a Map by key                               |
 |                | `reduce`     | Accumulates the items into a single value                    |
 |                | `start`      | Exhaust a stream without doing anything with the products    |
+| Application    | `apply`      | Apply a function with binding for _this_ and an array of arguments |
+|                | `bind`       | Bind a function to a _this_ value                            |
 
+### Types
+
+- `BufferedIterator` and `BufferedReactor`: compose a buffer and an iterator (reactor), allowing for shared iterators that push values into the buffer until they’re ready to be consumed
+- `IteratorQueue` and `ReactorQueue`: a queue that can be consumed as an iterator or reactor

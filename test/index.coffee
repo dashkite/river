@@ -12,6 +12,9 @@ import {
   group
   map 
   merge
+  partition
+  IteratorQueue
+  ReactorQueue as Queue
   reduce
   reject
   resolve
@@ -20,6 +23,7 @@ import {
   start
   take
   tap
+  tee
   unique
   uniquely
   zip
@@ -165,6 +169,67 @@ do ->
 
     ]
 
+    test "queue", [
+
+      test "reactor", [
+
+        test "drain buffer", [
+
+          test "close before", ->
+
+            q = Queue.make()
+            q.enqueue "last item"
+
+            q.close()
+
+            await do ->
+              for await value from q
+                assert.equal "last item", value
+
+          test "close after", ->
+
+            q = Queue.make()
+            q.enqueue "last item"
+
+            pending = do ->
+              for await value from q
+                assert.equal "last item", value
+
+            q.close()
+
+            await pending
+
+          test "close empty", ->
+
+            q = Queue.make()
+
+            assert.rejects ->
+              value for await value from q
+
+            q.close()
+
+        ]
+
+
+      ]
+    ]
+
+    test "partition", [
+
+      test "iterator", -> 
+        # prove that we can handle one-time use iterators
+        source = [ 1..4 ].values()
+        [ evens, odds ] = partition even, source
+        assert.deepEqual [ 2, 4 ], collect evens
+        assert.deepEqual [ 1, 3 ], collect odds
+
+      test "reactor", ->
+        [ evens, odds ] = partition even, resolving [ 1..4 ]
+        assert.deepEqual [ 2, 4 ], await collect evens
+        assert.deepEqual [ 1, 3 ], await collect odds    
+
+    ]
+
     test "reduce", [
 
       test "iterator", ->
@@ -247,6 +312,20 @@ do ->
         f = -> x++
         await collect tap f, resolving [ 1..5 ]
         assert.equal 5, x
+
+    ]
+
+    test "tee", [
+
+      test "iterator", ->
+        [ i, j ] = tee [ 1..5 ].values()
+        assert.deepEqual [ 1..5 ], collect i
+        assert.deepEqual [ 1..5 ], collect j
+
+      test "reactor", ->
+        [ i, j ] = tee resolving [ 1..5 ]
+        assert.deepEqual [ 1..5 ], await collect i
+        assert.deepEqual [ 1..5 ], await collect j
 
     ]
 
