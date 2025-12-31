@@ -4,39 +4,39 @@
 
 ## Table of Contents
 
-- **[Classes](https://www.google.com/search?q=%23classes)**
-  - [IteratorQueue](https://www.google.com/search?q=%23iteratorqueue)
-  - [ReactorQueue](https://www.google.com/search?q=%23reactorqueue)
-  - [BufferedIterator](https://www.google.com/search?q=%23bufferediterator)
-  - [BufferedReactor](https://www.google.com/search?q=%23bufferedreactor)
-- **[Functions](https://www.google.com/search?q=%23functions)**
-  - **[Transformation](https://www.google.com/search?q=%23transformation)**
-    - [map](https://www.google.com/search?q=%23map)
-    - [resolve](https://www.google.com/search?q=%23resolve)
-    - [spread](https://www.google.com/search?q=%23spread)
-    - [tap](https://www.google.com/search?q=%23tap)
-    - [tee](https://www.google.com/search?q=%23tee)
-  - **[Filtering](https://www.google.com/search?q=%23filtering)**
-    - [partition](https://www.google.com/search?q=%23partition)
-    - [reject](https://www.google.com/search?q=%23reject)
-    - [select](https://www.google.com/search?q=%23select)
-    - [unique](https://www.google.com/search?q=%23unique)
-    - [uniquely](https://www.google.com/search?q=%23uniquely)
-  - **[Truncating](https://www.google.com/search?q=%23truncating)**
-    - [drop](https://www.google.com/search?q=%23drop)
-    - [take](https://www.google.com/search?q=%23take)
-  - **[Combining](https://www.google.com/search?q=%23combining)**
-    - [merge](https://www.google.com/search?q=%23merge)
-    - [zip](https://www.google.com/search?q=%23zip)
-  - **[Reducing](https://www.google.com/search?q=%23reducing)**
-    - [all](https://www.google.com/search?q=%23all)
-    - [any](https://www.google.com/search?q=%23any)
-    - [collect](https://www.google.com/search?q=%23collect)
-    - [each](https://www.google.com/search?q=%23each)
-    - [find](https://www.google.com/search?q=%23find)
-    - [group](https://www.google.com/search?q=%23group)
-    - [reduce](https://www.google.com/search?q=%23reduce)
-    - [start](https://www.google.com/search?q=%23start)
+- **[Classes](#classes)**
+  - [IteratorQueue](#iterator-queue)
+  - [ReactorQueue](#reactor-queue)
+  - [BufferedIterator](#buffered-iterator)
+  - [BufferedReactor](#buffered-reactor)
+- **[Functions](#functions)**
+  - **[Transformation](#transformation)**
+    - [map](#map)
+    - [resolve](#resolve)
+    - [spread](#spread)
+    - [tap](#tap)
+    - [tee](#tee)
+  - **[Filtering](#filtering)**
+    - [partition](#partition)
+    - [reject](#reject)
+    - [select](#select)
+    - [unique](#unique)
+    - [uniquely](#uniquely)
+  - **[Truncating](#truncating)**
+    - [drop](#drop)
+    - [take](#take)
+  - **[Combining](#combining)**
+    - [merge](#merge)
+    - [zip](#zip)
+  - **[Reducing](#reducing)**
+    - [all](#all)
+    - [any](#any)
+    - [collect](#collect)
+    - [each](#each)
+    - [find](#find)
+    - [group](#group)
+    - [reduce](#reduce)
+    - [start](#start)
 
 ## Classes
 
