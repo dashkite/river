@@ -2,7 +2,7 @@ import { curry } from "@dashkite/joy/function"
 import { negate } from "@dashkite/joy/predicate"
 import select from "./select"
 
-reject = ( predicate, i ) ->
+reject = curry ( predicate, i ) ->
   select.call @, ( negate predicate ), i
 
 export { reject }

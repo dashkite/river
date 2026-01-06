@@ -1,9 +1,10 @@
 import Generic from "@dashkite/generic"
+import { unary } from "@dashkite/joy/function"
 import { isIterable, isReactive } from "@dashkite/joy/type"
 import BufferedIterator from "./buffered/iterator"
 import BufferedReactor from "./buffered/reactor"
 
-tee = do ->
+tee = unary do ->
 
   ( Generic.make "tee" )
 

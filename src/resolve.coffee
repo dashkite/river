@@ -1,10 +1,11 @@
 import Generic from "@dashkite/generic"
+import { unary } from "@dashkite/joy/function"
 import {
   isIterable
   isReactive
 } from "@dashkite/joy/type"
 
-resolve = do ->
+resolve = unary do ->
   
   ( Generic.make "resolve" )
   

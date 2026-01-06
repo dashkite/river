@@ -5,7 +5,6 @@ import {
   isReactive
 } from "@dashkite/joy/type"
 
-
 tap = curry binary do ->
   
   ( Generic.make "tap" )
