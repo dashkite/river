@@ -45,7 +45,7 @@
     "@dashkite/genie-watch": "0.5.0"
   },
   "dependencies": {
-  "@dashkite/generic": "link:../generic",
-    "@dashkite/joy": "link:../joy"
+    "@dashkite/generic": "^0.9.32",
+    "@dashkite/joy": "^0.12.40"
   }
 }
