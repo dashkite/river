@@ -12,8 +12,8 @@ importers:
         specifier: 0.9.19
         version: 0.9.19
       '@dashkite/joy':
-        specifier: ^0.12.40
-        version: 0.12.40
+        specifier: link:../joy
+        version: link:../joy
     devDependencies:
       '@dashkite/amen':
         specifier: 0.9.14
@@ -901,9 +901,6 @@ packages:
     resolution: {integrity: sha512-MTS20sb/usuOnPawtzbA9kBmTJpPwjEXSdPMbciQ22/WdLPSvRgFgpZASDvF4iDHiOHL7BkvTwGLGeDmMaelOQ==}
     engines: {node: '>=20.0.0'}
     hasBin: true
-
-  '@dashkite/joy@0.12.40':
-    resolution: {integrity: sha512-osq/1Lms2GpR04w7p4moF4dwXNYrrBihppQjDejn4+YN+Ak8sceWbuBo3nfpDS/szJ14/4aG7pkf2d2UwOXd+w==}
 
   '@dashkite/joy@0.3.16':
     resolution: {integrity: sha512-dsU0us4j1Pb+zceoBvLbnZ2PbmULkJUtM2vtWLxKmoc1DE4w9SVTiPTe6JWvF0A0vk90ldv+Lc9qEA5x3O+DtQ==}
@@ -4146,8 +4143,6 @@ snapshots:
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - '@swc/helpers'
-
-  '@dashkite/joy@0.12.40': {}
 
   '@dashkite/joy@0.3.16': {}
 
