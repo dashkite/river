@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dashkite/generic':
-        specifier: 0.9.19
-        version: 0.9.19
+        specifier: 0.9.32
+        version: 0.9.32
       '@dashkite/joy':
         specifier: link:../joy
         version: link:../joy
@@ -855,8 +855,8 @@ packages:
   '@dashkite/dolores@0.1.0':
     resolution: {integrity: sha512-EyL1wH7HdVRCAr42nkkYqsYwW/zzUsA9Dq2/jJ3mnbuJcIZLqj6kiQNgcXdhs0By4egGnOvyndKGpVOTl8QBYg==}
 
-  '@dashkite/generic@0.9.19':
-    resolution: {integrity: sha512-6f0HtogQR3IPTT6XbL+d2a5y1GvJWrHFvlY86HiLggEErGyegbcGte5ZXZaQNRTXtkTpyuYw7LxrrkU1kq6Eqw==}
+  '@dashkite/generic@0.9.32':
+    resolution: {integrity: sha512-V24SkcR8flHSbrNCAbClFbiXGmZCEZoMga2+MAWFFJ4RCXhNz6nn0X+MqLoTCNbaXasRUr6tmUFXOw4Hx9fMIA==}
 
   '@dashkite/genie-clean@0.9.0':
     resolution: {integrity: sha512-cR5IaFycabxIOH0XrExG5DCrm91milsdPqt104+AcIFEtpthwQ55lgOkS660tC8l7SxnwZzMZbZxHP3oK0iT0A==}
@@ -3908,7 +3908,7 @@ snapshots:
       - aws-crt
       - encoding
 
-  '@dashkite/generic@0.9.19':
+  '@dashkite/generic@0.9.32':
     dependencies:
       '@dashkite/joy': 0.7.0
 
