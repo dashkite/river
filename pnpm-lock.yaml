@@ -12,8 +12,8 @@ importers:
         specifier: 0.9.32
         version: 0.9.32
       '@dashkite/joy':
-        specifier: ^0.12.42
-        version: 0.12.42
+        specifier: ^0.12.43
+        version: 0.12.43
     devDependencies:
       '@dashkite/amen':
         specifier: 0.9.30
@@ -34,8 +34,8 @@ importers:
         specifier: 0.9.0
         version: 0.9.0
       '@dashkite/genie-module':
-        specifier: ^0.5.59
-        version: 0.5.59(@aws-sdk/credential-provider-node@3.529.0)
+        specifier: ^0.5.60
+        version: 0.5.60(@aws-sdk/credential-provider-node@3.529.0)
       '@dashkite/genie-release':
         specifier: 0.5.0
         version: 0.5.0
@@ -1075,8 +1075,8 @@ packages:
   '@dashkite/genie-drn@0.12.38':
     resolution: {integrity: sha512-0E8JsbcGnaJ27plN/qTq/3Gbf/KhFz2Ka4ulh6iEaw70yrOcDPOP1B0oq5IiD1HPzugy7vDj3gUfzh+bD/Aa1A==}
 
-  '@dashkite/genie-module@0.5.59':
-    resolution: {integrity: sha512-KQVa7AxuhytrFbxZreBmlvF7vpOWiSK5l7LVPLos15FgINIehpEM9YdvRXP3tUtknmZPVQ+K1Dw+xLIJA56MyQ==}
+  '@dashkite/genie-module@0.5.60':
+    resolution: {integrity: sha512-zWsXtreotsKVVKAj3tWX5sU97PtgSQGeWcn2yRy3yp+ty8jlgihx/8JvRjkdufi3GTUtZl1/mxQJqYepVysOag==}
 
   '@dashkite/genie-publish@0.9.35':
     resolution: {integrity: sha512-zNLM8xfB0k126xzACocQIKSoj6ONYK3Zz+zNb2b1SLvVP5IqIUhg5wXSlZf5axyioRYoOSxw+bBURgGs77a7JA==}
@@ -1095,8 +1095,8 @@ packages:
   '@dashkite/joy@0.12.40':
     resolution: {integrity: sha512-osq/1Lms2GpR04w7p4moF4dwXNYrrBihppQjDejn4+YN+Ak8sceWbuBo3nfpDS/szJ14/4aG7pkf2d2UwOXd+w==}
 
-  '@dashkite/joy@0.12.42':
-    resolution: {integrity: sha512-L2T1Hhw8iwIsrSPGfjAQlSkYHkIdy1AuJrrsaaZB/jH+2EfsqT+ug0UFzPZQ7Exbzebk4hRmKqsmkv6RU87nEw==}
+  '@dashkite/joy@0.12.43':
+    resolution: {integrity: sha512-GHEKO9OCf8Ofoj/y9Fk6/n3MUmnTrJWoZzbN/fw5dI8tpK9flpOWicrFUYBSSKEcNQdyoZDNp+TZNQv6IrNbQw==}
 
   '@dashkite/joy@0.3.16':
     resolution: {integrity: sha512-dsU0us4j1Pb+zceoBvLbnZ2PbmULkJUtM2vtWLxKmoc1DE4w9SVTiPTe6JWvF0A0vk90ldv+Lc9qEA5x3O+DtQ==}
@@ -4831,7 +4831,7 @@ snapshots:
     dependencies:
       '@dashkite/drn': 0.12.33
       '@dashkite/drn-loader': 0.11.29
-      '@dashkite/joy': 0.12.42
+      '@dashkite/joy': 0.12.43
       '@dashkite/masonry-hooks': 0.12.28
       '@dashkite/zephyr': 0.9.0
       js-yaml: 4.1.1
@@ -4839,7 +4839,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dashkite/genie-module@0.5.59(@aws-sdk/credential-provider-node@3.529.0)':
+  '@dashkite/genie-module@0.5.60(@aws-sdk/credential-provider-node@3.529.0)':
     dependencies:
       '@dashkite/drn-sky': 0.8.34
       '@dashkite/genie-drn': 0.12.38
@@ -4896,7 +4896,7 @@ snapshots:
 
   '@dashkite/joy@0.12.40': {}
 
-  '@dashkite/joy@0.12.42': {}
+  '@dashkite/joy@0.12.43': {}
 
   '@dashkite/joy@0.3.16': {}
 
@@ -4917,7 +4917,7 @@ snapshots:
 
   '@dashkite/masonry-hooks@0.12.28':
     dependencies:
-      '@dashkite/joy': 0.12.42
+      '@dashkite/joy': 0.12.43
       '@dashkite/masonry': 0.21.0
     transitivePeerDependencies:
       - supports-color
