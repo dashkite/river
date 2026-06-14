@@ -46,6 +46,6 @@
   },
   "dependencies": {
     "@dashkite/generic": "0.9.32",
-    "@dashkite/joy": "link:../joy"
+    "@dashkite/joy": "^0.12.41"
   }
 }

@@ -12,8 +12,8 @@ importers:
         specifier: 0.9.32
         version: 0.9.32
       '@dashkite/joy':
-        specifier: link:../joy
-        version: link:../joy
+        specifier: ^0.12.41
+        version: 0.12.41
     devDependencies:
       '@dashkite/amen':
         specifier: 0.9.30
