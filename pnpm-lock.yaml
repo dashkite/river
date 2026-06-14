@@ -34,8 +34,8 @@ importers:
         specifier: 0.9.0
         version: 0.9.0
       '@dashkite/genie-module':
-        specifier: ^0.5.57
-        version: 0.5.57(@aws-sdk/credential-provider-node@3.529.0)
+        specifier: ^0.5.58
+        version: 0.5.58(@aws-sdk/credential-provider-node@3.529.0)
       '@dashkite/genie-release':
         specifier: 0.5.0
         version: 0.5.0
@@ -1075,8 +1075,8 @@ packages:
   '@dashkite/genie-drn@0.12.37':
     resolution: {integrity: sha512-JEM3SDPPpaUiKOaB9V229JGh6DlaED7QtNI+kFl5iSEk3qFb5TFndrKLvKW6mY734IbLBj1LUuPrjz+yPr8hGw==}
 
-  '@dashkite/genie-module@0.5.57':
-    resolution: {integrity: sha512-IqZu0robIEqKpnhqOPk3GsgdQV6R/w1ZqFxXVYquqZ0ygg3Pm9gYQD10/JO0XGMdT61xJ/b69rGtCEfckPqZIA==}
+  '@dashkite/genie-module@0.5.58':
+    resolution: {integrity: sha512-fTEEahgKSLIJb22XdHBGHMvbz9ZNvh4U+FahG7gWYqP+1NhDN0T3PZS8x52X3+lTAAYbDHsdymacZ8tAmq8LeQ==}
 
   '@dashkite/genie-publish@0.9.35':
     resolution: {integrity: sha512-zNLM8xfB0k126xzACocQIKSoj6ONYK3Zz+zNb2b1SLvVP5IqIUhg5wXSlZf5axyioRYoOSxw+bBURgGs77a7JA==}
@@ -1094,6 +1094,9 @@ packages:
 
   '@dashkite/joy@0.12.40':
     resolution: {integrity: sha512-osq/1Lms2GpR04w7p4moF4dwXNYrrBihppQjDejn4+YN+Ak8sceWbuBo3nfpDS/szJ14/4aG7pkf2d2UwOXd+w==}
+
+  '@dashkite/joy@0.12.41':
+    resolution: {integrity: sha512-PHYUJiUsJ8aKdLu9nixFdiYHP5LJBzeXSFptfO6ZkzOogzdUF0GU8NX7EaFkP748Ysrfz6KAihX6MFqcdgOWpQ==}
 
   '@dashkite/joy@0.3.16':
     resolution: {integrity: sha512-dsU0us4j1Pb+zceoBvLbnZ2PbmULkJUtM2vtWLxKmoc1DE4w9SVTiPTe6JWvF0A0vk90ldv+Lc9qEA5x3O+DtQ==}
@@ -4828,7 +4831,7 @@ snapshots:
     dependencies:
       '@dashkite/drn': 0.12.33
       '@dashkite/drn-loader': 0.11.29
-      '@dashkite/joy': 0.12.40
+      '@dashkite/joy': 0.12.41
       '@dashkite/masonry-hooks': 0.12.28
       '@dashkite/zephyr': 0.9.0
       js-yaml: 4.1.1
@@ -4836,7 +4839,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@dashkite/genie-module@0.5.57(@aws-sdk/credential-provider-node@3.529.0)':
+  '@dashkite/genie-module@0.5.58(@aws-sdk/credential-provider-node@3.529.0)':
     dependencies:
       '@dashkite/drn-sky': 0.8.34
       '@dashkite/genie-drn': 0.12.37
@@ -4893,6 +4896,8 @@ snapshots:
 
   '@dashkite/joy@0.12.40': {}
 
+  '@dashkite/joy@0.12.41': {}
+
   '@dashkite/joy@0.3.16': {}
 
   '@dashkite/joy@0.4.0': {}
@@ -4912,7 +4917,7 @@ snapshots:
 
   '@dashkite/masonry-hooks@0.12.28':
     dependencies:
-      '@dashkite/joy': 0.12.40
+      '@dashkite/joy': 0.12.41
       '@dashkite/masonry': 0.21.0
     transitivePeerDependencies:
       - supports-color
