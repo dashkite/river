@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/river",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Iterator and reactor functions for JavaScript",
   "keywords": [],
   "homepage": "https://github.com/dashkite/river#readme",
