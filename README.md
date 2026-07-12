@@ -4,9 +4,22 @@
 
 [![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
 
-River provides a unified functional interface for iterators and **reactors** (asynchronous iterators). Every function is curried and automatically dispatches to the most efficient implementation based on the input type.
+River provides a unified functional interface for iterators and reactors (asynchronous iterators). Every function is curried and automatically dispatches to the most efficient implementation based on the input type.
 
-## Use
+## Features
+
+- Uses lazy evaluation whenever possible
+- Dispatches to the optimized implementation based on the arguments
+- Provides a functional interface for a superset of the JavaScript iterator helpers
+- Preserves _this_ binding within combinators allowing use within methods
+
+## Installation
+
+```bash
+pnpm install @dashkite/river
+```
+
+## Usage
 
 ```coffeescript
 import { pipe } from "@dashkite/joy/function"
@@ -29,13 +42,9 @@ get = pipe [
 values = await get [ "https://httpbin.org/json" ]
 ```
 
-## Features
+## Other Resources
 
-- Uses lazy evaluation whenever possible
-- Dispatches to the optimized implementation based on the arguments
-- Provides a functional interface for a superset of the JavaScript iterator helpers
-- Preserves _this_ binding within combinators allowing use within methods
-
-## API Reference
-
-[API Reference](docs/reference/api.md)
+- [Recipes](docs/recipes.md)
+- [Reference](docs/reference.md)
+- [Technical Notes](docs/technical-notes.md)
+- [Testing](docs/testing.md)
